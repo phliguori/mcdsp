@@ -9,6 +9,9 @@
 #include <string>
 #include <cplex.h>
 
+#include <cstring>  // Added by Youcef
+#include <math.h>  // Added by Youcef
+
 #define SOLVER_INF    CPX_INFBOUND
 #define SOLVER_EPS    1e-8
 

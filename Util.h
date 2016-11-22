@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 
+
 #define __class__ typeid(*this).name()
 
 void logMsg(const char * class_name, const char * method, const std::string & message, std::ostream & output = std::cout);

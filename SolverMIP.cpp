@@ -2,7 +2,6 @@
 
 #include <cstdlib>
 #include <iostream>
-
 SolverMIP::SolverMIP()
 	:env(NULL), lp(NULL), probName(std::string())
 {
@@ -462,7 +461,7 @@ bool SolverMIP::shutDownHeuristics()
 {
 	bool ret = true;
 
-	status = CPXsetintparam(env, CPXPARAM_MIP_Strategy_HeuristicFreq, -1);
+	//status = CPXsetintparam(env, CPXPARAM_MIP_Strategy_HeuristicFreq, -1);
 	if (status)
 	{
 		int warnCode = 125;
@@ -695,7 +694,7 @@ bool SolverMIP::addCol(Column::COLTYPE _type, const double _objcoef, const doubl
 		if (strcmp(_name, "") != 0)
 		{
 			cname = (char*) malloc(sizeof _name + 1);
-			strcpy_s(cname, sizeof _name, _name);
+			strcpy(cname,/* sizeof _name,*/ _name);
 		}
 	}
 
@@ -799,7 +798,7 @@ bool SolverMIP::addRow(Row::ROWSENSE _sense, int _maxnnz, double _rhs, const cha
 		if (strcmp(_name, "") != 0)
 		{
 			rname = (char*) malloc(sizeof _name + 1);
-			strcpy_s(rname, sizeof _name, _name);
+			strcpy(rname,/* sizeof _name,*/ _name);
 		}
 	}
 

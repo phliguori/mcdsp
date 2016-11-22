@@ -2,6 +2,8 @@
 #define ROW_H
 
 #include<string>
+#include <cstring> // Added by Youcef
+#include <typeinfo>  // Added by Youcef
 
 class Row {
 public:

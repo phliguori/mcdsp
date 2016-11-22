@@ -6,23 +6,24 @@
 #include <locale>
 #include <sstream>
 #include <ctime>
+#include "time.h"
 
 void logMsg(const char * _class, const char * _method, const std::string & _message, std::ostream & _output)
 {
 	std::string times;
 	time_t timev;
-	struct tm now;
+	struct tm *now;
 
 	time(&timev);
-	localtime_s(&now, &timev);
+	now = localtime( &timev);
 
-	times += std::to_string(now.tm_year + 1900);
-	times += std::to_string(now.tm_mon + 1);
-	times += std::to_string(now.tm_mday);
+	times += std::to_string(now->tm_year + 1900);
+	times += std::to_string(now->tm_mon + 1);
+	times += std::to_string(now->tm_mday);
 	times += ":";
-	times += std::to_string(now.tm_hour);
-	times += std::to_string(now.tm_min);
-	times += std::to_string(now.tm_sec);
+	times += std::to_string(now->tm_hour);
+	times += std::to_string(now->tm_min);
+	times += std::to_string(now->tm_sec);
 
 #ifdef WIN
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 3);
@@ -40,7 +41,7 @@ void logMsg(const char * _class, const char * _method, const std::string & _mess
 #endif
 	_output << _message << "\n";
 
-	_flushall();
+	//_flushall();
 }
 
 void errorMsg(const char * _class, const char * _method, const char* _message, int _code, std::ostream & _output)
@@ -148,16 +149,16 @@ double getToken()
 
 bool cmdOptionExists(char** begin, char** end, const std::string& option)
 {
-	return std::find(begin, end, option) != end;
+	//return std::find(begin, end, option) != end;
 }
 
 char* getCmdOption(char ** begin, char ** end, const std::string & option)
 {
-	char ** itr = std::find(begin, end, option);
+	/*char ** itr = std::find(begin, end, option);
 	if (itr != end && ++itr != end)
 	{
 		return *itr;
 	}
 
-	return 0;
+	return 0;*/
 }
