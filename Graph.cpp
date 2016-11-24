@@ -4,12 +4,10 @@
 /********************* C_Color class **************************/
 
 /****************************************************************/
-C_color::C_color()
-{
+C_color::C_color() {
 }
 
-C_color::~C_color()
-{
+C_color::~C_color() {
 }
 
 
@@ -18,29 +16,24 @@ C_color::~C_color()
 /********************* C_edge class **************************/
 
 /****************************************************************/
-C_edge::C_edge()
-{
+C_edge::C_edge() {
 }
 
-C_edge::C_edge(C_node *v1, C_node *v2)
-{
+C_edge::C_edge(C_node *v1, C_node *v2) {
     end1 = v1;
     end2 = v2;
 }
 
-C_edge::~C_edge()
-{
+C_edge::~C_edge() {
 }
 
 C_node*
-C_edge::get_end1()
-{
+C_edge::get_end1() {
     return end1;
 }
 
 C_node*
-C_edge::get_end2()
-{
+C_edge::get_end2() {
     return end2;
 }
 
@@ -49,14 +42,12 @@ C_edge::get_end2()
 
 /****************************************************************/
 
-C_node::C_node()
-{
+C_node::C_node() {
     num = 0;
     nb_colors = 0;
 }
 
-C_node::~C_node()
-{
+C_node::~C_node() {
 }
 
 
@@ -65,38 +56,33 @@ C_node::~C_node()
 
 /**************************************************************/
 
-C_graph::C_graph()
-{
+C_graph::C_graph() {
     nb_nodes = 0;
     nb_edges = 0;
     nb_colors = 0;
 }
 
-C_graph::~C_graph()
-{
+C_graph::~C_graph() {
 
 }
 
-bool C_graph::is_edge(int n1, int n2)
-{
+bool C_graph::is_edge(int n1, int n2) {
     if (std::find(nodesVec[n1]->neighbors.begin(), nodesVec[n1]->neighbors.end(), n2) != nodesVec[n1]->neighbors.end())
         return true;
     else return false;
 }
 
-int C_graph::get_edge(int n1, int n2)
-{
+int C_graph::get_edge(int n1, int n2) {
     int i = 0;
     if (is_edge(n1, n2) == false || n1 > nb_nodes || n2 > nb_nodes) return -1;
 
     for (i = 0; i < nb_edges; i++)
         if ((edgesVec[i]->end1->num == n1 && edgesVec[i]->end2->num == n2) || (edgesVec[i]->end1->num == n2 && edgesVec[i]->end2->num == n1))
             return i;
-	return -1;
+    return -1;
 }
 
-void C_graph::affiche()
-{
+void C_graph::affiche() {
     cout << "Graph G :" << endl << endl;
 
     cout << nb_nodes << " nodes" << endl;
@@ -104,24 +90,21 @@ void C_graph::affiche()
     cout << nb_colors << " colors" << endl << endl;
 
     cout << endl << "List of colors :" << endl;
-    for (int i = 0; i < nb_colors; i++)
-    {
+    for (int i = 0; i < nb_colors; i++) {
         cout << colorsVec[i]->num << endl;
     }
     cout << endl;
 
 
     cout << endl << "List of nodes :" << endl;
-    for (int i = 0; i < nb_nodes; i++)
-    {
+    for (int i = 0; i < nb_nodes; i++) {
         cout << nodesVec[i]->num << ":";
 
-        for (int j = 0; j < nodesVec[i]->nb_colors; j++)
-        {
+        for (int j = 0; j < nodesVec[i]->nb_colors; j++) {
 
-            cout << "  (Color = " << nodesVec[i]->colors[j] 
-				//<< ", weight = " << nodesVec[i]->weights[j]
-				<< ")";
+            cout << "  (Color = " << nodesVec[i]->colors[j]
+                    //<< ", weight = " << nodesVec[i]->weights[j]
+                    << ")";
         }
 
         cout << endl;
@@ -129,8 +112,7 @@ void C_graph::affiche()
     cout << endl;
     cout << endl << "List of edges :" << endl;
 
-    for (int i = 0; i < nb_edges; i++)
-    {
+    for (int i = 0; i < nb_edges; i++) {
         cout << edgesVec[i]->num;
         cout << " : " << edgesVec[i]->end1->num << " -- ";
         cout << edgesVec[i]->end2->num << "    ";
@@ -141,8 +123,7 @@ void C_graph::affiche()
 
 }
 
-void C_graph::random_graph(int nb, double density, int max_colors, int max_weights)
-{
+void C_graph::random_graph(int nb, double density, int max_colors, int max_weights) {
     cout << "Generating a random graph." << endl;
 
     //Initializing of tools
@@ -150,16 +131,13 @@ void C_graph::random_graph(int nb, double density, int max_colors, int max_weigh
 
     C_node *ptr_node;
     C_edge *ptr_edge;
-    C_color *ptr_color;
-    srand(time(0));
 
     // Adding nodes to the graph
     nb_nodes = nb;
 
     nodesVec.resize(nb_nodes);
 
-    for (int i = 0; i < nb_nodes; i++)
-    {
+    for (int i = 0; i < nb_nodes; i++) {
         ptr_node = new(C_node);
         ptr_node->num = i;
         nodesVec[i] = ptr_node;
@@ -186,8 +164,7 @@ void C_graph::random_graph(int nb, double density, int max_colors, int max_weigh
 
     edge_iteratorM ui, ui_end;
     deque < vertex_descriptorM >::iterator pos, pos1;
-    for (boost::tuples::tie(ui, ui_end) = edges(G); ui != ui_end; ++ui)
-    {
+    for (boost::tuples::tie(ui, ui_end) = edges(G); ui != ui_end; ++ui) {
         pos = find(g_vertices.begin(), g_vertices.end(), target(*ui, G));
         pos1 = find(g_vertices.begin(), g_vertices.end(), source(*ui, G));
         ptr_edge = new(C_edge);
@@ -200,30 +177,40 @@ void C_graph::random_graph(int nb, double density, int max_colors, int max_weigh
 
         // Adding a same color the the nodes of the edge 
         int l = rand() % max_colors; // Select one color
-        while (std::find(Colors_tmp.begin(), Colors_tmp.end(), l - 1) == Colors_tmp.end() && l > 0)
-        {
+        while (std::find(Colors_tmp.begin(), Colors_tmp.end(), l - 1) == Colors_tmp.end() && l > 0) {
             l--;
         }
 
-        // If the colors does not already exist in the colors of end1, we add the new color
-        if (std::find(nodesVec[ptr_edge->end1->num]->colors.begin(), nodesVec[ptr_edge->end1->num]->colors.end(), l) == nodesVec[ptr_edge->end1->num]->colors.end())
-        {
-            nodesVec[ptr_edge->end1->num]->colors.push_back(l);
-            //nodesVec[ptr_edge->end1->num]->weights.push_back(rand() % max_weights);
-            nodesVec[ptr_edge->end1->num]->nb_colors++;
-        }
+        bool exist_a_comon_color = false;
+        for (int i = 0; i < nodesVec[ptr_edge->end1->num]->colors.size(); i++)
+            if (std::find(nodesVec[ptr_edge->end2->num]->colors.begin(), nodesVec[ptr_edge->end2->num]->colors.end(), 
+                    nodesVec[ptr_edge->end1->num]->colors[i]) != nodesVec[ptr_edge->end2->num]->colors.end()) {
+                exist_a_comon_color = true;
+                break;
+            }
 
-        // If the colors does not already exist in the colors of end2, we add the new color
-        if (std::find(nodesVec[ptr_edge->end2->num]->colors.begin(), nodesVec[ptr_edge->end2->num]->colors.end(), l) == nodesVec[ptr_edge->end2->num]->colors.end())
-        {
-            nodesVec[ptr_edge->end2->num]->colors.push_back(l);
-            //nodesVec[ptr_edge->end2->num]->weights.push_back(rand() % max_weights);
-            nodesVec[ptr_edge->end2->num]->nb_colors++;
+        int probability_adding_colors=-1;
+        if (exist_a_comon_color)
+            probability_adding_colors = rand() % 7;
+
+        // If the colors does not already exist in the colors of end1, we add the new color
+        if (probability_adding_colors == 2 || !exist_a_comon_color ) {
+            if (std::find(nodesVec[ptr_edge->end1->num]->colors.begin(), nodesVec[ptr_edge->end1->num]->colors.end(), l) == nodesVec[ptr_edge->end1->num]->colors.end()) {
+                nodesVec[ptr_edge->end1->num]->colors.push_back(l);
+                nodeColorWeight[make_pair(ptr_edge->end1->num, l)] = rand() % max_weights;
+                nodesVec[ptr_edge->end1->num]->nb_colors++;
+            }
+
+            // If the colors does not already exist in the colors of end2, we add the new color
+            if (std::find(nodesVec[ptr_edge->end2->num]->colors.begin(), nodesVec[ptr_edge->end2->num]->colors.end(), l) == nodesVec[ptr_edge->end2->num]->colors.end()) {
+                nodesVec[ptr_edge->end2->num]->colors.push_back(l);
+                nodeColorWeight[make_pair(ptr_edge->end2->num, l)] = rand() % max_weights;
+                nodesVec[ptr_edge->end2->num]->nb_colors++;
+            }
         }
 
         // If the colors does not already exist in the set Colors, we add the new color
-        if (std::find(Colors_tmp.begin(), Colors_tmp.end(), l) == Colors_tmp.end())
-        {
+        if (std::find(Colors_tmp.begin(), Colors_tmp.end(), l) == Colors_tmp.end()) {
             Colors_tmp.push_back(l);
             nb_colors++;
         }
@@ -233,17 +220,15 @@ void C_graph::random_graph(int nb, double density, int max_colors, int max_weigh
     }
 
     colorsVec.resize(nb_colors);
-    for (int i = 0; i < nb_colors; i++)
-    {
+    C_color * ptr_color;
+    for (int i = 0; i < nb_colors; i++) {
         ptr_color = new(C_color);
         ptr_color->num = i;
         colorsVec[i] = ptr_color;
     }
 
-    for (int i = 0; i < nb_nodes; i++)
-    {
-        for (int j = 0; j < nodesVec[i]->colors.size(); j++)
-        {
+    for (int i = 0; i < nb_nodes; i++) {
+        for (int j = 0; j < nodesVec[i]->colors.size(); j++) {
             colorsVec[nodesVec[i]->colors[j]]->nodes_with_this_color.push_back(i);
         }
     }
