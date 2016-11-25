@@ -412,6 +412,13 @@ void C_graph::read_graph(char *nom_ext)
         nodesVec.push_back(ptr_node);
     }
 
+    for (int i = 0; i < nb_colors; i++)
+    {
+        C_color * ptr_color;
+        ptr_color = new(C_color);
+        ptr_color->num = i;
+        colorsVec .push_back(ptr_color);
+    }
 
     int tmp, tmp1, tmp2;
     while (strcmp(buffer, "Edges") != 0)
@@ -424,6 +431,7 @@ void C_graph::read_graph(char *nom_ext)
             fic >> tmp2;
             nodesVec[tmp]->num = tmp;
             nodesVec[tmp]->colors.push_back(tmp2);
+            colorsVec[tmp]->nodes_with_this_color.push_back(tmp);
             nodeColorWeight[make_pair(tmp, tmp2)] = tmp1;
         }
     }
@@ -451,12 +459,5 @@ void C_graph::read_graph(char *nom_ext)
         edgesVec.push_back(ptr_edge);
     }
 
-    for (int i = 0; i < nb_colors; i++)
-    {
-        C_color * ptr_color;
-        ptr_color = new(C_color);
-        ptr_color->num = i;
-        colorsVec .push_back(ptr_color);
-    }
 
 }
