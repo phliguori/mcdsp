@@ -1,10 +1,11 @@
 #ifndef _GRAPH_H
 #define _GRAPH_H
 
-#include <iostream>
 #include <vector>
-#include <map>
+#include <ctime>
 #include <stdio.h>
+#include <cstdlib>
+#include <iostream>
 
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/make_connected.hpp>
@@ -17,7 +18,15 @@
 #include <boost/graph/plod_generator.hpp>
 #include <boost/graph/graphviz.hpp>
 #include <boost/random/linear_congruential.hpp>
+
+using namespace::std;
 using namespace boost;
+
+class C_color;
+class C_node;
+class C_edge;
+class C_graph;
+
 
 typedef adjacency_list
 < setS,
@@ -37,51 +46,18 @@ typedef graph_traitsM::edge_descriptor edge_descriptorM;
 typedef graph_traitsM::edges_size_type edges_size_typeM;
 typedef graph_traitsM::edge_iterator edge_iteratorM;
 
-using namespace std;
-
-class C_color;
-class C_node;
-class C_edge;
-class C_graph;
-
-
 class C_color {
 public:
 	int num; // color number
-	vector <int> nodes_with_this_color; // set of nodes with the current color
+	int weight; // color color
+	vector<int> nodes_with_this_color; // set of nodes with the current color
 
 	C_color();
 	~C_color();
 };
 
-
-class C_node {
-public:
-	int num; // node number
-	int nb_colors;
-	vector<int> neighbors;
-	vector<int> colors;		// Set of colors associated with the node
-	vector<double> weights; // Set of weights associated with the each color -> colors.size() == weights.size()
-	C_node();
-	~C_node();
-};
-
-
 class C_edge {
 public:
-	bool operator() (const C_edge * _lPtr, const C_edge * _rPtr) const
-	{
-		if (_lPtr != NULL && _rPtr != NULL)
-		{
-			if (_lPtr->end1->num != _rPtr->end1->num)
-				return _lPtr->end1->num < _rPtr->end1->num;
-
-			return _lPtr->end2->num < _rPtr->end2->num;
-		}
-
-		return false;
-	}
-
 	int num; // edge number
 	C_node *end1; //first end of the edge
 	C_node *end2; //second end of the edge
@@ -94,6 +70,15 @@ public:
 	C_node* get_end2();
 };
 
+class C_node {
+public:
+	int num; // node number
+	int nb_colors;
+	vector<int> neighbors;
+	vector<int> colors; // Set of colors associated with the node
+	C_node();
+	~C_node();
+};
 
 class C_graph {
 public:
@@ -103,9 +88,6 @@ public:
 	vector<C_color*> colorsVec; // Set of all colors  in the graph
 	vector<C_node*> nodesVec; // pointers of nodes
 	vector<C_edge*> edgesVec; // pointers of edges
-	
-	map<pair<int, int>, double> nodeColorWeight;
-
 	C_graph();
 	~C_graph();
 
@@ -113,7 +95,10 @@ public:
 	bool is_edge(int n1, int n2); // Check if there is an edge between two nodes
 
 	void affiche(); // Print the graph
-	void random_graph(int nb, double density, int max_colors, int max_weights); // Generate a random graph
+	void random_graph(int nb, double density, int max_colors, int max_weights, int seed = 0); // Generate a random graph
 };
 
 #endif
+
+
+
