@@ -151,7 +151,7 @@ void C_graph::random_graph(int nb, double density, int max_colors, int max_weigh
     C_node *ptr_node;
     C_edge *ptr_edge;
     C_color *ptr_color;
-    srand(time(0));
+    //srand(time(0));
 
     // Adding nodes to the graph
     nb_nodes = nb;

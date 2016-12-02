@@ -91,14 +91,16 @@ int DominationForm::createVarX(Column::COLTYPE _colType)
 		std::sort(v->neighbors.begin(), v->neighbors.end());
 		std::sort(v->colors.begin(), v->colors.end());
 
-		for (auto & cCod : v->colors)
+		for (int c = 0; c < v->nb_colors; ++c)
 		{
+			coeff = v->weights[c];
+			C_color* color = g->colorsVec[v->colors[c]];
+
 			Variable var(_colType, coeff, lb, ub);
 			var.setType(varType);
 			var.setNode(v);
-			var.setColor(g->colorsVec[cCod]);
+			var.setColor(color);
 
-			coeff = g->nodeColorWeight[make_pair(vCod, cCod)];
 
 			vit = vHash[varType].find(var);
 			if (vit != vHash[varType].end())
@@ -253,7 +255,7 @@ std::string DominationForm::printXSol()
 				int idx = vit->second;
 
 				if (xSol[idx] > SOLVER_EPS)
-					tmp << (vit->first).toString() << "; " << xSol[idx] << std::endl;
+					tmp << (vit->first).toString() << "; " << xSol[idx] << "; " << vit->first.getObjCoef() << std::endl;
 			}
 		}
 	}
