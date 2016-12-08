@@ -113,7 +113,9 @@ public:
 	bool is_edge(int n1, int n2); // Check if there is an edge between two nodes
 
 	void affiche(); // Print the graph
+	void read_graph(char *nom_ext);
 	void random_graph(int nb, double density, int max_colors, int max_weights); // Generate a random graph
+	void random_graph_in_file(int nb, double density, int max_colors, int max_weights, char *inst);
 };
 
 #endif
